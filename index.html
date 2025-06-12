@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Math Adventure Land 🌟</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Comic Neue", cursive;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            min-height: 100vh;
+            color: #2d3748;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navigation - Mobile Friendly */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #ff6b9d;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo {
+            font-family: "Fredoka One", cursive;
+            font-size: 1.5em;
+            color: #ff6b9d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: bold;
+            font-size: 0.9em;
+            padding: 8px 12px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #2d3748;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 10px;
+            }
+            
+            .logo {
+                font-size: 1.2em;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-links a {
+                font-size: 1.1em;
+                padding: 12px 20px;
+                text-align: center;
+                border-radius: 10px;
+                margin: 5px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 20px;
+        }
+
+        /* Section Styles */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Section */
+        .hero {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 5px solid #ff6b9d;
+        }
+
+        .hero h1 {
+            font-family: "Fredoka One", cursive;
+            font-size: 4em;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .mascot {
+            font-size: 6em;
+            animation: bounce 2s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Activity Cards */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border-color: #ff6b9d;
+        }
+
+        .activity-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .activity-card h3 {
+            font-family: "Fredoka One", cursive;
+            font-size: 1.6em;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .activity-card p {
+            color: #4a5568;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        /* Learning Section Styles */
+        .learning-container {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 4px solid #4ecdc4;
+        }
+
+        .learning-title {
+            font-family: "Fredoka One", cursive;
+            font-size: 2.8em;
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+        }
+
+        .step-container {
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid #2d3748;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .step-number {
+            background: #2d3748;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Fredoka One", cursive;
+            font-size: 1.5em;
+        }
+
+        .step-title {
+            font-family: "Fredoka One", cursive;
+            font-size: 1.8em;
+            color: #2d3748;
+        }
+
+        .step-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        .math-example {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid #4ecdc4;
+            text-align: center;
+        }
+
+        .math-work {
+            font-family: "Courier New", monospace;
+            font-size: 2em;
+            color: #2d3748;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        .highlight-step {
+            background: linear-gradient(135deg, #ff6b9d, #4ecdc4);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .borrowing-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .number-box {
+            background: #74b9ff;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: "Fredoka One", cursive;
+            font-size: 2em;
+            border: 3px solid white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #ff6b9d;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .crossed-out {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .new-number {
+            background: #00b894;
+            animation: glow 1s ease-in-out;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 0 8px 30px rgba(0, 184, 148, 0.6); }
+            100% { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+        }
+
+        .interactive-example {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .interactive-title {
+            font-family: "Fredoka One", cursive;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .practice-problem {
+            background: white;
+            color: #2d3748;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: "Courier New", monospace;
+            font-size: 2.5em;
+            border: 3px solid #2d3748;
+        }
+
+        .step-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-btn {
+            background: linear-gradient(135deg, #ff6b9d, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-family: "Fredoka One", cursive;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .step-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Creative Game Styles */
+        .game-container {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 4px solid #4ecdc4;
+        }
+
+        .game-title {
+            font-family: "Fredoka One", cursive;
+            font-size: 2.5em;
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+        }
+
+        .treasure-hunt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .game-story {
+            background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            border: 4px solid white;
+        }
+
+        .treasure-map {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            padding: 30px;
+            border-radius: 20px;
+            border: 5px solid #654321;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            min-height: 400px;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 2px, transparent 2px);
+        }
+
+        .treasure-spot {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #FFD700;
+            animation: treasureGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes treasureGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+        }
+
+        .treasure-spot:hover {
+            transform: scale(1.2);
+            animation: none;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 1);
+        }
+
+        .treasure-spot.correct {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            animation: treasureFound 1s ease;
+        }
+
+        .treasure-spot.incorrect {
+            background: linear-gradient(135deg, #e17055, #d63031);
+            animation: treasureWrong 0.5s ease;
+        }
+
+        @keyframes treasureFound {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes treasureWrong {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .pirate-problem {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-family: "Fredoka One", cursive;
+            font-size: 2.5em;
+            border: 4px solid #FFD700;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .pirate-character {
+            font-size: 4em;
+            animation: pirateWave 2s ease-in-out infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes pirateWave {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid white;
+        }
+
+        .stat-item {
+            text-align: center;
+            font-family: "Fredoka One", cursive;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            display: block;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-family: "Fredoka One", cursive;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 4px solid #a29bfe;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .quiz-title {
+            font-family: "Fredoka One", cursive;
+            font-size: 2.5em;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .quiz-progress {
+            background: #e0e0e0;
+            height: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            background: linear-gradient(90deg, #a29bfe, #6c5ce7);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .question-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.8em;
+            color: #2d3748;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-option {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.3em;
+            font-family: "Comic Neue", cursive;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .quiz-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-option.selected {
+            background: linear-gradient(135deg, #00b894, #00a085);
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-btn {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-family: "Fredoka One", cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .quiz-results h3 {
+            font-family: "Fredoka One", cursive;
+            font-size: 2.5em;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .quiz-score {
+            font-size: 3em;
+            font-family: "Fredoka One", cursive;
+            color: #00b894;
+            margin: 20px 0;
+        }
+
+        /* About Section */
+        .about-container {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 4px solid #fd79a8;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-title {
+            font-family: "Fredoka One", cursive;
+            font-size: 3em;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .educator-avatar {
+            font-size: 8em;
+            background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            border-radius: 50%;
+            padding: 30px;
+            border: 5px solid white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .about-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #4a5568;
+        }
+
+        .about-text h3 {
+            font-family: "Fredoka One", cursive;
+            font-size: 1.8em;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        /* Enhanced Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 90px 15px 20px;
+            }
+            
+            .hero {
+                padding: 30px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2em;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1.2em;
+            }
+            
+            .mascot {
+                font-size: 4em;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .activity-card {
+                padding: 25px 20px;
+            }
+            
+            .activity-card h3 {
+                font-size: 1.4em;
+            }
+            
+            .learning-container,
+            .game-container,
+            .quiz-container,
+            .about-container {
+                padding: 25px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .learning-title,
+            .game-title,
+            .quiz-title,
+            .about-title {
+                font-size: 2em;
+                line-height: 1.2;
+            }
+            
+            .step-container {
+                padding: 20px 15px;
+            }
+            
+            .step-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .step-title {
+                font-size: 1.4em;
+            }
+            
+            .step-content {
+                font-size: 1.1em;
+            }
+            
+            .math-work {
+                font-size: 1.5em;
+            }
+            
+            .practice-problem {
+                font-size: 1.8em;
+                padding: 20px;
+            }
+            
+            .borrowing-animation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .number-box {
+                font-size: 1.5em;
+                padding: 15px;
+                min-width: 60px;
+            }
+            
+            .step-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .step-btn {
+                width: 100%;
+                max-width: 300px;
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+            
+            .treasure-map {
+                min-height: 250px;
+                padding: 20px;
+            }
+            
+            .treasure-spot {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5em;
+            }
+            
+            .pirate-problem {
+                font-size: 1.8em;
+                padding: 20px;
+            }
+            
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .stat-item {
+                padding: 10px;
+            }
+            
+            .stat-number {
+                font-size: 1.5em;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .game-btn,
+            .quiz-btn {
+                width: 100%;
+                max-width: 250px;
+                font-size: 1.1em;
+                padding: 12px 25px;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .quiz-option {
+                font-size: 1.2em;
+                padding: 12px 20px;
+            }
+            
+            .question-text {
+                font-size: 1.4em;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 25px;
+            }
+    
+            .educator-avatar {
+                font-size: 6em;
+                padding: 20px;
+            }
+    
+            .about-text {
+                font-size: 1.1em;
+            }
+    
+            .about-text h3 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8em;
+            }
+    
+            .hero p {
+                font-size: 1.1em;
+            }
+    
+            .learning-title,
+            .game-title,
+            .quiz-title {
+                font-size: 1.6em;
+            }
+    
+            .step-title {
+                font-size: 1.2em;
+            }
+    
+            .math-work {
+                font-size: 1.3em;
+            }
+    
+            .practice-problem {
+                font-size: 1.5em;
+            }
+    
+            .pirate-problem {
+                font-size: 1.5em;
+            }
+    
+            .treasure-spot {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3em;
+            }
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-math {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.3;
+            animation: floatMath 15s linear infinite;
+        }
+
+        @keyframes floatMath {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-math:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-math:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .floating-math:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .floating-math:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .floating-math:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .floating-math:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .floating-math:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .floating-math:nth-child(8) { left: 80%; animation-delay: 14s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                🌟 Math Adventure
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" onclick="showSection('home')" class="active">🏠 Home</a></li>
+                <li><a href="#" onclick="showSection('learn')">📚 Learn</a></li>
+                <li><a href="#" onclick="showSection('games')">🏴‍☠️ Game</a></li>
+                <li><a href="#" onclick="showSection('quiz')">📝 Quiz</a></li>
+                <li><a href="#" onclick="showSection('about')">👩‍🏫 About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="mascot">🦄</div>
+                <h1>Welcome to Math Adventure Land!</h1>
+                <p>Where learning math is magical and fun! Join us on an exciting journey through numbers, games, and discoveries!</p>
+            </div>
+
+            <div class="activities-grid">
+                <div class="activity-card" onclick="showSection('learn')">
+                    <div class="activity-icon">📚</div>
+                    <h3>Learn Subtraction</h3>
+                    <p>Master two-digit subtraction with step-by-step lessons and interactive examples!</p>
+                </div>
+
+                <div class="activity-card" onclick="showSection('games')">
+                    <div class="activity-icon">🏴‍☠️</div>
+                    <h3>Treasure Hunt Game</h3>
+                    <p>Join Captain Math on a pirate adventure! Solve subtraction problems to find hidden treasures!</p>
+                </div>
+
+                <div class="activity-card" onclick="showSection('quiz')">
+                    <div class="activity-icon">🧠</div>
+                    <h3>Smart Quiz</h3>
+                    <p>Test your math skills with our interactive quiz and see how much you've learned!</p>
+                </div>
+
+                <div class="activity-card" onclick="showSection('about')">
+                    <div class="activity-icon">👩‍🏫</div>
+                    <h3>Meet Your Teacher</h3>
+                    <p>Learn about the amazing educator who created this magical math world for you!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Section -->
+        <section id="learn" class="section">
+            <div class="learning-container">
+                <h2 class="learning-title">📚 Mastering Two-Digit Subtraction</h2>
+                
+                <div class="step-container">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <div class="step-title">🔍 Let's Look at a Problem</div>
+                    </div>
+                    <div class="step-content">
+                        <p>Sometimes when we subtract, we run into a tricky situation. Let's see what happens with this problem:</p>
+                        <div class="math-example">
+                            <div class="math-work">
+                                52<br>
+                                -27<br>
+                                ---
+                            </div>
+                            <p>Look at the ones place: Can we subtract 7 from 2? 🤔</p>
+                            <p><strong>Hmm... 2 is smaller than 7! What do we do?</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <div class="step-title">💡 The Magic Solution: Borrowing!</div>
+                    </div>
+                    <div class="step-content">
+                        <p>When we can't subtract in the ones place, we can <span class="highlight-step">"borrow"</span> from our tens place!</p>
+                        <div class="math-example">
+                            <p><strong>Think of it like trading money:</strong></p>
+                            <p>🏦 1 ten-dollar bill = 10 one-dollar bills 💵💵💵💵💵💵💵💵💵💵</p>
+                            <p>We can trade 1 ten for 10 ones when we need more ones!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <div class="step-title">✨ Step-by-Step Borrowing</div>
+                    </div>
+                    <div class="step-content">
+                        <p>Let's solve 52 - 27 together using borrowing!</p>
+                        
+                        <div class="math-example">
+                            <p><strong>Step 3a: Check the ones place</strong></p>
+                            <div class="borrowing-animation">
+                                <div class="number-box">5</div>
+                                <div class="number-box">2</div>
+                                <div style="font-size: 1.5em;">-</div>
+                                <div class="number-box">2</div>
+                                <div class="number-box">7</div>
+                            </div>
+                            <p>Can we subtract 7 from 2? No! We need to borrow! 🆘</p>
+                        </div>
+
+                        <div class="math-example">
+                            <p><strong>Step 3b: Borrow from the tens place</strong></p>
+                            <div class="borrowing-animation">
+                                <div class="number-box crossed-out">5</div>
+                                <div class="arrow">➡️</div>
+                                <div class="number-box new-number">4</div>
+                                <div class="number-box crossed-out">2</div>
+                                <div class="arrow">➡️</div>
+                                <div class="number-box new-number">12</div>
+                            </div>
+                            <p>We borrowed 1 ten from 5, making it 4 tens</p>
+                            <p>We added 10 ones to 2, making it 12 ones</p>
+                        </div>
+
+                        <div class="math-example">
+                            <p><strong>Step 3c: Now we can subtract!</strong></p>
+                            <div class="math-work">
+                                <span style="text-decoration: line-through; opacity: 0.5;">5</span>4 <span style="text-decoration: line-through; opacity: 0.5;">2</span>12<br>
+                                -27<br>
+                                ---<br>
+                                25
+                            </div>
+                            <p>12 - 7 = 5 (ones place)</p>
+                            <p>4 - 2 = 2 (tens place)</p>
+                            <p><strong>Answer: 25! 🎉</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <div class="step-title">🎮 Interactive Practice</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="interactive-example">
+                            <div class="interactive-title">Try it yourself: 63 - 28</div>
+                            <div class="practice-problem" id="practice-display">
+                                63<br>
+                                -28<br>
+                                ---<br>
+                                <span id="practice-answer">?</span>
+                            </div>
+                            <div class="step-buttons">
+                                <button class="step-btn" onclick="practiceStep(1)" id="step1-btn">
+                                    Step 1: Check if we need to borrow
+                                </button>
+                                <button class="step-btn" onclick="practiceStep(2)" id="step2-btn" disabled>
+                                    Step 2: Borrow from tens place
+                                </button>
+                                <button class="step-btn" onclick="practiceStep(3)" id="step3-btn" disabled>
+                                    Step 3: Subtract ones place
+                                </button>
+                                <button class="step-btn" onclick="practiceStep(4)" id="step4-btn" disabled>
+                                    Step 4: Subtract tens place
+                                </button>
+                                <button class="step-btn" onclick="resetPractice()" id="reset-btn" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                                    🔄 Try Again
+                                </button>
+                            </div>
+                            <div id="practice-explanation" style="margin-top: 20px; font-size: 1.1em;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <div class="step-title">🎯 Quick Tips for Success!</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="math-example">
+                            <p><strong>✅ Always check the ones place first</strong></p>
+                            <p><strong>✅ If bottom number > top number, you need to borrow</strong></p>
+                            <p><strong>✅ Cross out the old numbers and write the new ones</strong></p>
+                            <p><strong>✅ Subtract ones first, then tens</strong></p>
+                            <p><strong>✅ Check your answer by adding back!</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Creative Treasure Hunt Game Section -->
+        <section id="games" class="section">
+            <div class="game-container">
+                <h2 class="game-title">🏴‍☠️ Captain Math's Treasure Hunt</h2>
+                
+                <div class="treasure-hunt">
+                    <div class="game-story">
+                        <div class="pirate-character">🏴‍☠️</div>
+                        <p><strong>Ahoy, matey!</strong> Captain Math needs your help to find the buried treasure! Solve the subtraction problem and click on the treasure chest with the correct answer!</p>
+                    </div>
+                    
+                    <div class="pirate-problem" id="pirate-problem">
+                        52 - 27 = ?
+                    </div>
+                    
+                    <div class="treasure-map" id="treasure-map">
+                        <!-- Treasure spots will be dynamically positioned -->
+                    </div>
+                    
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="treasures-found">0</span>
+                            <span>Treasures Found 💰</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="pirate-level">1</span>
+                            <span>Pirate Level 🏴‍☠️</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="time-remaining">60</span>
+                            <span>Time Left ⏰</span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startTreasureHunt()" id="start-game-btn">
+                            🚀 Start Adventure!
+                        </button>
+                        <button class="game-btn" onclick="newTreasureMap()" id="new-map-btn" style="display: none;">
+                            🗺️ New Map
+                        </button>
+                        <button class="game-btn" onclick="pauseGame()" id="pause-btn" style="display: none;">
+                            ⏸️ Pause
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2 class="quiz-title">📝 Math Knowledge Quiz</h2>
+                    <p>Answer all questions to test your subtraction skills!</p>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-fill" id="quiz-progress"></div>
+                    </div>
+                    <p>Question <span id="current-question">1</span> of <span id="total-questions">5</span></p>
+                </div>
+
+                <div id="quiz-content">
+                    <div class="question-container">
+                        <div class="question-text" id="question-text">
+                            What is 52 - 27?
+                        </div>
+                        
+                        <div class="quiz-options" id="quiz-options">
+                            <button class="quiz-option" onclick="selectAnswer(0)">23</button>
+                            <button class="quiz-option" onclick="selectAnswer(1)">25</button>
+                            <button class="quiz-option" onclick="selectAnswer(2)">35</button>
+                            <button class="quiz-option" onclick="selectAnswer(3)">29</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" onclick="previousQuestion()" id="prev-btn" disabled>
+                            ⬅️ Previous
+                        </button>
+                        <button class="quiz-btn" onclick="nextQuestion()" id="next-btn" disabled>
+                            Next ➡️
+                        </button>
+                        <button class="quiz-btn" onclick="submitQuiz()" id="submit-btn" style="display: none;">
+                            🏆 Submit Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="quiz-results" style="display: none;">
+                    <h3>🎉 Quiz Complete! 🎉</h3>
+                    <div class="quiz-score" id="final-score">0/5</div>
+                    <p id="score-message">Great job!</p>
+                    <button class="quiz-btn" onclick="restartQuiz()">
+                        🔄 Try Again
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-container">
+                <div class="about-header">
+                    <h2 class="about-title">👩‍🏫 About Us</h2>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="educator-avatar">👩‍🎓</div>
+                    </div>
+                    
+                    <div class="about-text">
+                        <h3>Meet Your Math Teacher! 🌟</h3>
+                        <p>
+                            This website is created by <span class="highlight">Zahraa Al Haj Haidar</span>, 
+                            a math educator and postgraduate student in Educational Technology. 
+                            It is designed to help young learners understand how to subtract two-digit 
+                            numbers through simple, engaging, and interactive methods.
+                        </p>
+                        <br>
+                        <p>
+                            By blending <span class="highlight">effective teaching strategies</span> with the 
+                            power of technology, this platform makes learning subtraction clear, fun, and meaningful. 
+                            Every game, quiz, and activity is carefully designed to help you become a 
+                            <span class="highlight">math superstar</span>! 🌟
+                        </p>
+                        <br>
+                        <p>
+                            Our mission is to make math <span class="highlight">enjoyable and accessible</span> 
+                            for every student, turning challenging concepts into exciting adventures! 🚀
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating Math Elements -->
+    <div class="floating-elements">
+        <div class="floating-math">➕</div>
+        <div class="floating-math">➖</div>
+        <div class="floating-math">✖️</div>
+        <div class="floating-math">➗</div>
+        <div class="floating-math">🔢</div>
+        <div class="floating-math">📐</div>
+        <div class="floating-math">📏</div>
+        <div class="floating-math">🧮</div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Close mobile menu
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.remove('active');
+        }
+
+        // Interactive Practice
+        let practiceCurrentStep = 0;
+
+        function practiceStep(step) {
+            const explanationDiv = document.getElementById('practice-explanation');
+            const answerSpan = document.getElementById('practice-answer');
+            
+            switch(step) {
+                case 1:
+                    explanationDiv.innerHTML = "✅ Yes! We need to borrow because 3 - 8 is impossible. We need to borrow from the tens place!";
+                    document.getElementById('step2-btn').disabled = false;
+                    document.getElementById('step1-btn').disabled = true;
+                    practiceCurrentStep = 1;
+                    break;
+                    
+                case 2:
+                    explanationDiv.innerHTML = "✨ Great! We borrowed 1 ten from 6 (making it 5) and added 10 to 3 (making it 13). Now we have 5 tens and 13 ones!";
+                    document.getElementById('practice-display').innerHTML = `
+                        <span style="text-decoration: line-through; opacity: 0.5;">6</span>5 <span style="text-decoration: line-through; opacity: 0.5;">3</span>13<br>
+                        -28<br>
+                        ---<br>
+                        <span id="practice-answer">?</span>
+                    `;
+                    document.getElementById('step3-btn').disabled = false;
+                    document.getElementById('step2-btn').disabled = true;
+                    practiceCurrentStep = 2;
+                    break;
+                    
+                case 3:
+                    explanationDiv.innerHTML = "🎯 Perfect! 13 - 8 = 5. We write 5 in the ones place!";
+                    answerSpan.textContent = "5";
+                    document.getElementById('step4-btn').disabled = false;
+                    document.getElementById('step3-btn').disabled = true;
+                    practiceCurrentStep = 3;
+                    break;
+                    
+                case 4:
+                    explanationDiv.innerHTML = "🎉 Excellent! 5 - 2 = 3. We write 3 in the tens place. The answer is 35!";
+                    answerSpan.textContent = "35";
+                    document.getElementById('step4-btn').disabled = true;
+                    practiceCurrentStep = 4;
+                    playSound('success');
+                    break;
+            }
+        }
+
+        function resetPractice() {
+            practiceCurrentStep = 0;
+            document.getElementById('practice-display').innerHTML = `
+                63<br>
+                -28<br>
+                ---<br>
+                <span id="practice-answer">?</span>
+            `;
+            document.getElementById('practice-explanation').innerHTML = "";
+            
+            // Reset buttons
+            document.getElementById('step1-btn').disabled = false;
+            document.getElementById('step2-btn').disabled = true;
+            document.getElementById('step3-btn').disabled = true;
+            document.getElementById('step4-btn').disabled = true;
+        }
+
+        // Creative Treasure Hunt Game
+        let gameActive = false;
+        let gameTimer = null;
+        let timeRemaining = 60;
+        let treasuresFound = 0;
+        let pirateLevel = 1;
+        let currentProblem = {};
+        let gameAnswers = [];
+
+        function generateTreasureProblem() {
+            const num1 = Math.floor(Math.random() * 30) + 30; // 30-59
+            const num2 = Math.floor(Math.random() * 20) + 10; // 10-29
+            
+            // Ensure we need borrowing for subtraction
+            let minuend = num1;
+            let subtrahend = num2;
+            
+            // Make sure ones digit of minuend < ones digit of subtrahend for borrowing
+            const minuendOnes = minuend % 10;
+            const subtrahendOnes = subtrahend % 10;
+            
+            if (minuendOnes >= subtrahendOnes) {
+                subtrahend = Math.floor(subtrahend / 10) * 10 + (minuendOnes + Math.floor(Math.random() * 3) + 1);
+            }
+            
+            // Ensure positive result
+            if (subtrahend >= minuend) {
+                minuend += 10;
+            }
+            
+            const correctAnswer = minuend - subtrahend;
+            const problem = `${minuend} - ${subtrahend} = ?`;
+            
+            // Generate wrong answers
+            const wrongAnswers = [];
+            while (wrongAnswers.length < 3) {
+                const wrongAnswer = correctAnswer + Math.floor(Math.random() * 10) - 5;
+                if (wrongAnswer > 0 && wrongAnswer < 100 && wrongAnswer !== correctAnswer && !wrongAnswers.includes(wrongAnswer)) {
+                    wrongAnswers.push(wrongAnswer);
+                }
+            }
+            
+            gameAnswers = [correctAnswer, ...wrongAnswers];
+            // Shuffle answers
+            for (let i = gameAnswers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [gameAnswers[i], gameAnswers[j]] = [gameAnswers[j], gameAnswers[i]];
+            }
+            
+            currentProblem = { problem, correctAnswer };
+            document.getElementById('pirate-problem').textContent = problem;
+        }
+
+        function createTreasureMap() {
+            const map = document.getElementById('treasure-map');
+            map.innerHTML = '';
+            
+            // Create treasure spots at random positions
+            gameAnswers.forEach((answer, index) => {
+                const spot = document.createElement('div');
+                spot.className = 'treasure-spot';
+                spot.textContent = '💰';
+                spot.style.left = Math.random() * 80 + 10 + '%';
+                spot.style.top = Math.random() * 70 + 15 + '%';
+                spot.onclick = () => checkTreasure(answer, spot);
+                
+                // Add answer as tooltip
+                spot.title = answer;
+                
+                // Add answer number inside
+                const answerDiv = document.createElement('div');
+                answerDiv.style.fontSize = '0.8em';
+                answerDiv.style.color = '#FFD700';
+                answerDiv.style.fontWeight = 'bold';
+                answerDiv.textContent = answer;
+                spot.appendChild(answerDiv);
+                
+                map.appendChild(spot);
+            });
+        }
+
+        function checkTreasure(selectedAnswer, spotElement) {
+            if (!gameActive) return;
+            
+            if (selectedAnswer === currentProblem.correctAnswer) {
+                spotElement.classList.add('correct');
+                spotElement.textContent = '🏆';
+                treasuresFound++;
+                document.getElementById('treasures-found').textContent = treasuresFound;
+                
+                // Level up every 3 treasures
+                if (treasuresFound % 3 === 0) {
+                    pirateLevel++;
+                    document.getElementById('pirate-level').textContent = pirateLevel;
+                    timeRemaining += 10; // Bonus time
+                }
+                
+                playSound('success');
+                
+                setTimeout(() => {
+                    generateTreasureProblem();
+                    createTreasureMap();
+                }, 1500);
+                
+            } else {
+                spotElement.classList.add('incorrect');
+                spotElement.textContent = '💥';
+                playSound('error');
+                
+                setTimeout(() => {
+                    spotElement.classList.remove('incorrect');
+                    spotElement.textContent = '💰';
+                }, 1000);
+            }
+        }
+
+        function startTreasureHunt() {
+            gameActive = true;
+            timeRemaining = 60;
+            treasuresFound = 0;
+            pirateLevel = 1;
+            
+            document.getElementById('treasures-found').textContent = treasuresFound;
+            document.getElementById('pirate-level').textContent = pirateLevel;
+            document.getElementById('time-remaining').textContent = timeRemaining;
+            
+            document.getElementById('start-game-btn').style.display = 'none';
+            document.getElementById('new-map-btn').style.display = 'inline-block';
+            document.getElementById('pause-btn').style.display = 'inline-block';
+            
+            generateTreasureProblem();
+            createTreasureMap();
+            
+            gameTimer = setInterval(() => {
+                timeRemaining--;
+                document.getElementById('time-remaining').textContent = timeRemaining;
+                
+                if (timeRemaining <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function newTreasureMap() {
+            if (gameActive) {
+                generateTreasureProblem();
+                createTreasureMap();
+            }
+        }
+
+        function pauseGame() {
+            if (gameActive) {
+                gameActive = false;
+                clearInterval(gameTimer);
+                document.getElementById('pause-btn').textContent = '▶️ Resume';
+                document.getElementById('pause-btn').onclick = resumeGame;
+            }
+        }
+
+        function resumeGame() {
+            gameActive = true;
+            document.getElementById('pause-btn').textContent = '⏸️ Pause';
+            document.getElementById('pause-btn').onclick = pauseGame;
+            
+            gameTimer = setInterval(() => {
+                timeRemaining--;
+                document.getElementById('time-remaining').textContent = timeRemaining;
+                
+                if (timeRemaining <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearInterval(gameTimer);
+            
+            document.getElementById('start-game-btn').style.display = 'inline-block';
+            document.getElementById('new-map-btn').style.display = 'none';
+            document.getElementById('pause-btn').style.display = 'none';
+            
+            alert(`🏴‍☠️ Game Over! You found ${treasuresFound} treasures and reached Pirate Level ${pirateLevel}! Great job, matey!`);
+        }
+
+        // Quiz System
+        const quizQuestions = [
+            {
+                question: "What is 52 - 27? (This requires borrowing!)",
+                options: ["23", "25", "35", "29"],
+                correct: 1
+            },
+            {
+                question: "What is 63 - 28?",
+                options: ["35", "45", "34", "36"],
+                correct: 0
+            },
+            {
+                question: "What is 71 - 36?",
+                options: ["34", "35", "45", "44"],
+                correct: 1
+            },
+            {
+                question: "What is 84 - 47?",
+                options: ["37", "47", "36", "38"],
+                correct: 0
+            },
+            {
+                question: "What is 95 - 58?",
+                options: ["36", "37", "47", "38"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+        let quizScore = 0;
+
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = quizQuestions.length;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'quiz-option';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                
+                if (selectedAnswers[currentQuestionIndex] === index) {
+                    button.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(button);
+            });
+            
+            updateQuizProgress();
+            updateQuizButtons();
+        }
+
+        function selectAnswer(answerIndex) {
+            selectedAnswers[currentQuestionIndex] = answerIndex;
+            
+            document.querySelectorAll('.quiz-option').forEach((btn, index) => {
+                btn.classList.remove('selected');
+                if (index === answerIndex) {
+                    btn.classList.add('selected');
+                }
+            });
+            
+            updateQuizButtons();
+        }
+
+        function updateQuizProgress() {
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = progress + '%';
+        }
+
+        function updateQuizButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === quizQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+                submitBtn.disabled = selectedAnswers[currentQuestionIndex] === undefined;
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = selectedAnswers[currentQuestionIndex] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            quizScore = 0;
+            selectedAnswers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correct) {
+                    quizScore++;
+                }
+            });
+            
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('final-score').textContent = `${quizScore}/${quizQuestions.length}`;
+            
+            let message = '';
+            const percentage = (quizScore / quizQuestions.length) * 100;
+            
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You\'re a subtraction superstar! 🌟';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Keep practicing borrowing! 👍';
+            } else {
+                message = '💪 Keep trying! Review the learning section! 💪';
+            }
+            
+            document.getElementById('score-message').textContent = message;
+            playSound('success');
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            selectedAnswers = [];
+            quizScore = 0;
+            
+            document.getElementById('quiz-content').style.display = 'block';
+            document.getElementById('quiz-results').style.display = 'none';
+            
+            loadQuestion();
+        }
+
+        // Sound Effects
+        function playSound(type) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) {
+                const audioContext = new AudioContext();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                switch (type) {
+                    case 'success':
+                        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
+                        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        break;
+                    case 'error':
+                        oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        break;
+                }
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuestion();
+            resetPractice();
+        });
+    </script>
+</body>
+</html>
